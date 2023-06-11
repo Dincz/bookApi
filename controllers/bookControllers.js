@@ -1,5 +1,8 @@
+/* eslint-disable new-cap */
 /* eslint-disable consistent-return */
 const asyncHandler = require("express-async-handler");
+const { logger } = require("express-winston");
+
 const { constants } = require("../constants");
 const Book = require("../models/Book");
 
@@ -10,6 +13,7 @@ const getBooks = asyncHandler(async (req, res) => {
         const books = await Book.find();
         res.status(constants.OK).json(books);
     } catch (error) {
+        logger.info("Not found");
         res.status(constants.NOT_FOUND);
     }
 });
@@ -26,6 +30,7 @@ const createBook = asyncHandler(async (req, res) => {
         });
         res.status(constants.Created).json(book);
     } catch (error) {
+        logger.info("Validation Error");
         res.status(constants.VALIDATION_ERROR).json({ error: "Validation error" });
     }
 });
@@ -37,13 +42,16 @@ const getBook = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const book = await Book.findById(id);
         if (!book) {
+            logger.info("Book not found");
             return res.status(constants.NOT_FOUND).json({ error: "Books not found" });
         }
         res.json(book);
     } catch (error) {
         if (error.name === "CastError") {
+            logger.info("Cast Error");
             res.status(constants.VALIDATION_ERROR).json({ error: "Wrong ID" });
         } else {
+            logger.info("Internal server error");
             res.status(constants.SERVER_ERROR).json({ error: error.name });
         }
     }
@@ -56,13 +64,16 @@ const updateBook = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const book = await Book.findByIdAndUpdate(id);
         if (!book) {
+            logger.info("Book not found");
             return res.status(constants.NOT_FOUND).json({ error: "Books not found" });
         }
         res.status(constants.OK).json(book);
     } catch (error) {
         if (error.name === "CastError") {
+            logger.info("Cast Error");
             res.status(constants.VALIDATION_ERROR).json({ error: "Wrong ID" });
         } else {
+            logger.info("Internal server error");
             res.status(constants.SERVER_ERROR).json({ error: error.name });
         }
     }
@@ -75,13 +86,16 @@ const deleteBook = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const book = await Book.findByIdAndDelete(id);
         if (!book) {
+            logger.info("Book not found");
             return res.status(constants.NOT_FOUND).json({ error: "Books not found" });
         }
         res.sendStatus(constants.OK);
     } catch (error) {
         if (error.name === "CastError") {
+            logger.info("Cast Error");
             res.status(constants.VALIDATION_ERROR).json({ error: "Wrong ID" });
         } else {
+            logger.info("Internal server error");
             res.status(constants.SERVER_ERROR).json({ error: error.name });
         }
     }
