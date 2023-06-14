@@ -1,0 +1,12 @@
+2023-06-12T09:41:24.196Z error: uncaughtException: logger.info is not a function
+TypeError: logger.info is not a function
+    at C:\Users\DINESH\Desktop\GitUpload\Dinesh-Nadar\controllers\bookControllers.js:102:20
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-06-12T09:43:49.960Z error: uncaughtException: logger.info is not a function
+TypeError: logger.info is not a function
+    at C:\Users\DINESH\Desktop\GitUpload\Dinesh-Nadar\controllers\bookControllers.js:106:20
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2023-06-12T13:34:40.715Z error: uncaughtException: logger.info is not a function
+TypeError: logger.info is not a function
+    at C:\Users\DINESH\Desktop\GitUpload\Dinesh-Nadar\controllers\bookControllers.js:106:20
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)

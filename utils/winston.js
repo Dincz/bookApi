@@ -3,7 +3,7 @@ const { createLogger, format, transports } = require("winston");
 require("dotenv").config();
 require("winston-mongodb");
 
-const myFormat = format.printf(({ level, meta, timestamp }) => `${timestamp} ${level}: ${meta.message}`);
+// const myFormat = format.printf(({ level, meta, timestamp }) => `${timestamp} ${level}: ${meta.message}`);
 
 const logger = createLogger({
     transports: [
@@ -26,7 +26,7 @@ const logger = createLogger({
         format.timestamp(),
         format.metadata(),
         format.prettyPrint(),
-        myFormat,
+        // myFormat,
     ),
 
 });

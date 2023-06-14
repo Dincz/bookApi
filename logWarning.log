@@ -1,0 +1,26 @@
+{
+  level: 'warn',
+  message: 'HTTP DELETE /book/647fd4a6b6737532d6cd6719',
+  metadata: {
+    meta: {
+      req: {
+        url: '/book/647fd4a6b6737532d6cd6719',
+        headers: {
+          'user-agent': 'PostmanRuntime/7.32.2',
+          accept: '*/*',
+          'postman-token': '560e0e4a-24da-413a-b8c8-2d1a8719c886',
+          host: 'localhost:5000',
+          'accept-encoding': 'gzip, deflate, br',
+          connection: 'keep-alive'
+        },
+        method: 'DELETE',
+        httpVersion: '1.1',
+        originalUrl: '/book/647fd4a6b6737532d6cd6719',
+        query: {}
+      },
+      res: { statusCode: 404 },
+      responseTime: 210
+    },
+    timestamp: '2023-06-14T03:24:06.727Z'
+  }
+}

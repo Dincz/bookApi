@@ -1,13 +1,26 @@
 /* eslint-disable new-cap */
 /* eslint-disable consistent-return */
 const asyncHandler = require("express-async-handler");
-const { logger } = require("express-winston");
-
+const logger = require("express-winston");
+const Logger = require("../utils/winston");
+const express = require("express");
+const expressWinston = require("express-winston");
+const { transports, format } = require("winston");
 const { constants } = require("../constants");
+require("winston-mongodb");
 const Book = require("../models/Book");
 
+const app = express();
 // desc: Get all Books
 // route GET /book
+app.use(expressWinston.logger({
+    winstonInstance: logger,
+    statusLevels: true,
+}));
+Logger.log({
+    level: "info",
+    message: "Hello distributed log files!",
+});
 const getBooks = asyncHandler(async (req, res) => {
     try {
         const books = await Book.find();
@@ -86,7 +99,7 @@ const deleteBook = asyncHandler(async (req, res) => {
         const { id } = req.params;
         const book = await Book.findByIdAndDelete(id);
         if (!book) {
-            logger.info("Book not found");
+            Logger.info("Book not found");
             return res.status(constants.NOT_FOUND).json({ error: "Books not found" });
         }
         res.sendStatus(constants.OK);
@@ -100,6 +113,22 @@ const deleteBook = asyncHandler(async (req, res) => {
         }
     }
 });
+
+// const myFormat = format.printf(({ level, meta, timestamp }) => `${timestamp} ${level}: ${meta.message}`);
+
+app.use(expressWinston.errorLogger({
+    transports: [
+        new transports.File({
+            filename: "logsInternalErrors.log",
+        }),
+    ],
+    format: format.combine(
+        format.json(),
+        format.timestamp(),
+        // myFormat,
+
+    ),
+}));
 
 module.exports = {
     getBooks,
